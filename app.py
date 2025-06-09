@@ -36,7 +36,7 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'animaldetection.app1@gmail.com'  # Your email address
-app.config['MAIL_PASSWORD'] = 'rnmk wyeh fsfe oovz'  # Your email password
+app.config['MAIL_PASSWORD'] = 'your email pass'  # Your email password
 mail = Mail(app)
 
 import re
