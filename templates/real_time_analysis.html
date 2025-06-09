@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Analysis</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Animal Detection</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/upload_history">Upload History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/real_time_analysis">Real-Time Analysis</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2>Real-Time Animal Detection Analysis</h2>
+
+        <!-- Highest Confidence Score Detection -->
+        {% if highest_confidence %}
+            <div class="alert alert-info">
+                <strong>Highest Confidence Detection:</strong>
+                {{ highest_confidence.detected_animal }} ({{ highest_confidence.confidence_score }})
+            </div>
+        {% endif %}
+
+        <!-- Table: Total Detections Per Animal -->
+        <h3>Total Detections Per Animal</h3>
+        {% if animal_counts %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Animal</th>
+                        <th>Total Detections</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in animal_counts %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ entry.detected_animal }}</td>
+                            <td>{{ entry.total_detections }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No real-time detections found.</p>
+        {% endif %}
+
+        <!--  Table: Latest Detection of Each Animal -->
+        <h3>Latest Detection of Each Animal</h3>
+        {% if latest_detections %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Animal</th>
+                        <th>Confidence Score</th>
+                        <th>Detection Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in latest_detections %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ entry.detected_animal }}</td>
+                            <td>{{ entry.confidence_score }}</td>
+                            <td>{{ entry.detection_time }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No latest detections found.</p>
+        {% endif %}
+    </div>
+
+    <footer class="text-center mt-4">
+        &copy; 2024 Animal Detection App
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

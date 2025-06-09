@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload History</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Animal Detection</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/upload_history">Activity</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2>Upload History</h2>
+
+        <!-- Query Selection Form -->
+        <form method="POST" class="mb-3">
+            <label for="query_option" class="form-label"><strong>Filter by:</strong></label>
+            <div class="d-flex gap-3">
+                <select name="query_option" id="query_option" class="form-select w-auto">
+                    <option value="default" {% if selected_query == 'default' %}selected{% endif %}>All Uploads</option>
+                    <option value="inner_join" {% if selected_query == 'inner_join' %}selected{% endif %}>Users with Uploads (INNER JOIN)</option>
+                    <option value="left_join" {% if selected_query == 'left_join' %}selected{% endif %}>All Users, Even Without Uploads (LEFT JOIN)</option>
+                    <option value="nested_query" {% if selected_query == 'nested_query' %}selected{% endif %}>High Confidence Uploads (Nested Query)</option>
+                    <option value="aggregation" {% if selected_query == 'aggregation' %}selected{% endif %}>Detection Statistics (Aggregation)</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Apply Filter</button>
+            </div>
+        </form>
+
+        {% if history %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Image Path</th>
+                        <th>Animal Detected</th>
+                        <th>Confidence Score</th>
+                        <th>Upload Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in history %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td><a href="{{ entry.image_path }}" target="_blank">View Image</a></td>
+                            <td>{{ entry.predicted_animal }}</td>
+                            <td>{{ entry.confidence_score }}</td>
+                            <td>{{ entry.upload_time }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No upload history found.</p>
+        {% endif %}
+    </div>
+
+    <footer class="text-center mt-4">
+        &copy; 2024 Animal Detection App
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="mt-5">
+    <h2 class="text-center mb-4">Login to Your Account</h2>
+    <p class="text-center text-muted">Please enter your credentials to access the application.</p>
+
+    <form method="POST" class="w-50 mx-auto">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert-container mb-3">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'danger' if category == 'error' else category }}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" required>
+        </div>
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+        <div class="text-center mt-3">
+            <a href="{{ url_for('forgot_password') }}" class="text-muted">Forgot your password?</a>
+            <br>
+            <span>Don't have an account? <a href="{{ url_for('signup') }}">Sign up here</a>.</span>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+
